@@ -12,6 +12,5 @@ The dataset that was used was the “Amazon 50 Top Bestselling Books from 2009-2
 Analysis:
 Below is the SQL used in BigQuery to clean and filter the data for fiction books. I wanted to add in specific genres other than fiction and nonfiction, so I filtered and saved a table to get rid of duplicates, only pull the column for Name and only the fiction genre. I then added the different genre types by conducting Google searches on the books and adding to the table. Once the table was complete, I uploaded into BigQuery and joined my new table with the original table to add the column “Genre_Type”. I then used the COUNT and SUM functions to complete the analysis. 
  
-Link to Final Table:
-Final_Books_Fiction
+
  
