@@ -1,0 +1,149 @@
+# Running DISTINCT to get rid of duplicates
+ 
+SELECT  
+DISTINCT Name
+FROM `rare-nectar-344415.Best_Books.books` 
+ 
+# Filtering Table to have only 3 columns needed for analysis and only fiction genre
+ 
+SELECT
+  DISTINCT Name, User_Rating, Reviews
+  FROM `rare-nectar-344415.Best_Books.books`
+  WHERE 
+    Genre = 'Fiction'
+ 
+# Narrowing down data to top reviews and the most ratings
+ 
+SELECT
+  DISTINCT Name, User_Rating, Reviews
+FROM 
+  `rare-nectar-344415.Best_Books.books`
+WHERE
+ User_Rating >= 3 AND Reviews >= 10000 AND Genre = ‘Fiction’
+ 
+ # Too many results, narrowing down more
+ 
+ SELECT
+  DISTINCT Name, User_Rating, Reviews
+FROM 
+  `rare-nectar-344415.Best_Books.books`
+WHERE
+ User_Rating >= 4 AND Reviews >= 10000
+ 
+#Counting total genre to find most popular
+ 
+SELECT
+  COUNT(Genre_Type)  
+  FROM `rare-nectar-344415.Best_Books.Book_Genres`
+  WHERE Genre_Type = 'Dystopian'
+ 
+#Dystopian = 11
+ 
+ 
+SELECT
+  COUNT(Genre_Type)  
+  FROM `rare-nectar-344415.Best_Books.Book_Genres`
+  WHERE Genre_Type = 'Romance'
+ 
+#Romance = 6
+ 
+ 
+SELECT
+  COUNT(Genre_Type)  
+  FROM `rare-nectar-344415.Best_Books.Book_Genres`
+  WHERE Genre_Type = 'Historical'
+ 
+# Historical = 11
+ 
+ 
+SELECT
+  COUNT(Genre_Type)  
+  FROM `rare-nectar-344415.Best_Books.Book_Genres`
+  WHERE Genre_Type = 'Fantasy'
+ 
+# Fantasy = 9
+ 
+ 
+SELECT
+  COUNT(Genre_Type)  
+  FROM `rare-nectar-344415.Best_Books.Book_Genres`
+  WHERE Genre_Type = 'Childrens'
+ 
+#Childrens = 10
+ 
+ 
+SELECT
+  COUNT(Genre_Type)  
+  FROM `rare-nectar-344415.Best_Books.Book_Genres`
+  WHERE Genre_Type = 'Mystery'
+ 
+#Mystery = 6
+ 
+ 
+SELECT
+  COUNT(Genre_Type)  
+  FROM `rare-nectar-344415.Best_Books.Book_Genres`
+  WHERE Genre_Type = 'Thriller'
+ 
+#Thriller = 7
+ 
+# Top 3 Genres are Historical, Dystopian, and Childrens. These will be the genres for the displays.
+ 
+# Joining tables to ratings, reviews, and genre
+ 
+SELECT DISTINCT `rare-nectar-344415.Best_Books.Reviews_Ratings`.name, `rare-nectar-344415.Best_Books.Reviews_Ratings`.User_Rating,`rare-nectar-344415.Best_Books.Reviews_Ratings`.Reviews, `rare-nectar-344415.Best_Books.Book_Genres`.Genre_Type 
+ FROM `rare-nectar-344415.Best_Books.Reviews_Ratings` 
+ LEFT JOIN `rare-nectar-344415.Best_Books.Book_Genres`
+ ON `rare-nectar-344415.Best_Books.Reviews_Ratings`.name = `rare-nectar-344415.Best_Books.Book_Genres`.Name
+ 
+#Query to group by and order by for final analysis
+ 
+SELECT name, User_Rating, Reviews, Genre_Type
+  FROM `rare-nectar-344415.Best_Books.Final_Books`
+WHERE Genre_Type = 'Historical'
+ORDER BY User_Rating DESC
+ 
+#Top 5 Historical Books to display are "The Help", "The Nightingale: A Novel", "To Kill a Mockingbird", "A Gentleman in Moscow: A Novel", and "All the Light We Cannot See"
+ 
+ 
+SELECT name, User_Rating, Reviews, Genre_Type
+  FROM `rare-nectar-344415.Best_Books.Final_Books`
+WHERE Genre_Type = 'Dystopian'
+ORDER BY User_Rating DESC
+ 
+# Top 5 Books for Dystopian "The Hunger Game" series, "1984", "Divergent" series, "Fahrenheit 451", and "Ready Player One: A Novel"
+ 
+ 
+SELECT name, User_Rating, Reviews, Genre_Type
+  FROM `rare-nectar-344415.Best_Books.Final_Books`
+WHERE Genre_Type = 'Childrens'
+ORDER BY User_Rating DESC
+ 
+#Top 5 Books for Childens "Brown Bear, Brown Bear, What Do You See?", "Last Week Tonight", "Oh, The Places You'll Go!", "The Very Hungry Caterpillar","Dear Zoo: A Lift-the-Flap Book"
+ 
+#Running SUM on top 3 genres to which at the most reviews
+ 
+SELECT
+  SUM(Reviews)
+FROM `rare-nectar-344415.Best_Books.Final_Books`
+WHERE Genre_Type = 'Dystopian'
+ 
+#Dystopian has 259,453 Reviews
+ 
+SELECT
+  SUM(Reviews)
+FROM `rare-nectar-344415.Best_Books.Final_Books`
+WHERE Genre_Type = 'Historical'
+ 
+# Historical has 225,053 Reviews
+ 
+ 
+SELECT
+  SUM(Reviews)
+FROM `rare-nectar-344415.Best_Books.Final_Books`
+WHERE Genre_Type = 'Childrens'
+ 
+# Childrens has 179,629 Reviews
+ 
+#Dystopian was the most reviewed genre out of the top 3.
+ 
