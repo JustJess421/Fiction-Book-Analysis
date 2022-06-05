@@ -1,3 +1,5 @@
+##Fiction Queries
+
 # Running DISTINCT to get rid of duplicates
  
 SELECT  
@@ -146,4 +148,117 @@ WHERE Genre_Type = 'Childrens'
 # Childrens has 179,629 Reviews
  
 #Dystopian was the most reviewed genre out of the top 3.
+
+##Non-fiction Queries
+
+# Filtering table to get rid of duplicates and create a table with just name to add the genres
+ 
+SELECT  
+DISTINCT Name
+FROM `rare-nectar-344415.Best_Books.books` 
+WHERE
+  Genre = 'Non Fiction' AND User_Rating >= 4 AND Reviews >= 9000
+
+# Using COUNT to find Most Popular Genre
+ 
+SELECT 
+  COUNT(string_field_1)
+FROM `rare-nectar-344415.Best_Books.NonF_Genres`
+WHERE
+  string_field_1 = 'Self-Help'
+ 
+# Self- Help = 17
+ 
+SELECT 
+  COUNT(string_field_1)
+FROM `rare-nectar-344415.Best_Books.NonF_Genres`
+WHERE
+  string_field_1 = 'Biography'
+ 
+#Biography = 6
+ 
+SELECT 
+  COUNT(string_field_1)
+FROM `rare-nectar-344415.Best_Books.NonF_Genres`
+WHERE
+  string_field_1 = 'Autobiography'
+ 
+#Autobiography = 8
+ 
+SELECT 
+  COUNT(string_field_1)
+FROM `rare-nectar-344415.Best_Books.NonF_Genres`
+WHERE
+  string_field_1 = 'Cookbook'
+ 
+#Cookbook = 5
+ 
+# Self-Help, Autobiography, and Biography are most popular genre
+ 
+ 
+# Joining Genre table with original table
+ 
+SELECT DISTINCT `rare-nectar-344415.Best_Books.NonF_Reviews`.Name, `rare-nectar-344415.Best_Books.NonF_Reviews`.User_Rating,`rare-nectar-344415.Best_Books.NonF_Reviews`.Reviews, `rare-nectar-344415.Best_Books.NonF_Genres`.Genre_Type 
+ FROM `rare-nectar-344415.Best_Books.NonF_Reviews` 
+ LEFT JOIN `rare-nectar-344415.Best_Books.NonF_Genres`
+ ON `rare-nectar-344415.Best_Books.NonF_Reviews`.Name = `rare-nectar-344415.Best_Books.NONF_Genres`.Name
+ 
+# Finding the top 5 books in the top 3 genres
+ 
+SELECT name, User_Rating, Reviews, Genre_Type
+  FROM `rare-nectar-344415.Best_Books.Final_NonF`
+WHERE Genre_Type = 'Self-Help'
+ORDER BY User_Rating DESC
+ 
+#Top 5 Self-Help Books "Being Mortal: Medicine and What Matters in the End", "The 5 Love Languages: The Secret to Love that Lasts", "The Body Keeps the Score: Brain, Mind, and Body in the Healing of Trauma", "12 Rules for Life: An Antidote to Chaos", "How to Win Friends & Influence People" 
+ 
+ 
+SELECT name, User_Rating, Reviews, Genre_Type
+  FROM `rare-nectar-344415.Best_Books.Final_NonF`
+WHERE Genre_Type = 'Autobiography'
+ORDER BY User_Rating DESC
+ 
+#Top 5 Books for Autobiography "Becoming", "Can't Hurt Me: Master Your Mind and Defy the Odds", "When Breath Becomes Air", "Between the World and Me", "Educated: A Memoir"
+ 
+SELECT name, User_Rating, Reviews, Genre_Type
+  FROM `rare-nectar-344415.Best_Books.Final_NonF`
+WHERE Genre_Type = 'Biography'
+ORDER BY User_Rating DESC
+ 
+# Top 5 Biography "The Boys in the Boat: Nine Americans and Their Epic Quest for Gold at the 1936 Berlin Olympics", " Unbroken: A World War II Story of Survival, Resilience, and Redemption", "Alexander Hamilton", "The Immortal Life of Henrietta Lacks", "Killing Patton: The Strange Death of World War II's Most Audacious General (Bill O'Reilly's Killing Series)"
+
+#What Genre had the most reviews
+ 
+SELECT
+  SUM(Reviews)
+FROM `rare-nectar-344415.Best_Books.Final_NonF`
+WHERE Genre_Type = 'Self-Help'
+ 
+#Self-Help had 273,330
+ 
+SELECT
+  SUM(Reviews)
+FROM `rare-nectar-344415.Best_Books.Final_NonF`
+WHERE Genre_Type = 'Autobiography'
+ 
+#Autobiography had 178,446 
+ 
+SELECT
+  SUM(Reviews)
+FROM `rare-nectar-344415.Best_Books.Final_NonF`
+WHERE Genre_Type = 'Biography'
+ 
+#Biography had 96,1222
+ 
+#Self-Help had the most reviews
+ 
+#Joining both final tables to create one table
+SELECT *
+FROM `rare-nectar-344415.Best_Books.Final_Books`
+UNION ALL
+SELECT *
+FROM `rare-nectar-344415.Best_Books.Final_NonF`
+ 
+ 
+
  
